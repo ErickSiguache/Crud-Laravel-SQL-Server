@@ -15,6 +15,8 @@ class PersonasController extends Controller
     public function index()
     {
         //
+        $datos = Personas::all();
+        return view('inicio', compact('datos'));
     }
 
     /**
@@ -25,6 +27,7 @@ class PersonasController extends Controller
     public function create()
     {
         //
+        return view('agregar');
     }
 
     /**
@@ -36,6 +39,13 @@ class PersonasController extends Controller
     public function store(Request $request)
     {
         //
+        $personas = new Personas();
+        $personas->nombre = $request->post('nombre');
+        $personas->apellido = $request->post('apellido');
+        $personas->fecha_nacimiento = $request->post('fecha_nacimiento');
+        $personas->save();
+
+        return redirect()->route("personas.index")->with("success", "Agregado con exito!");
     }
 
     /**
@@ -44,9 +54,10 @@ class PersonasController extends Controller
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function show(Personas $personas)
+    public function show($id)
     {
-        //
+        $personas = Personas::find($id);
+        return view("eliminar" , compact('personas'));
     }
 
     /**
@@ -55,9 +66,11 @@ class PersonasController extends Controller
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Personas $personas)
+    public function edit($id)
     {
         //
+        $personas = Personas::find($id);
+        return view("actualizar" , compact('personas'));
     }
 
     /**
@@ -67,9 +80,16 @@ class PersonasController extends Controller
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Personas $personas)
+    public function update(Request $request, $id)
     {
-        //
+        //este metodo actualiza los datos en la bd
+        $personas = Personas::find($id);
+        $personas->nombre = $request->post('nombre');
+        $personas->apellido = $request->post('apellido');
+        $personas->fecha_nacimiento = $request->post('fecha_nacimiento');
+        $personas->save();
+
+        return redirect()->route("personas.index")->with("success", "Actualizado con exito!");
     }
 
     /**
@@ -78,8 +98,10 @@ class PersonasController extends Controller
      * @param  \App\Models\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Personas $personas)
+    public function destroy($id)
     {
-        //
+        $personas = Personas::find($id);
+        $personas->delete();
+        return redirect()->route("personas.index")->with("success", "Eliminado con exito!");
     }
 }
