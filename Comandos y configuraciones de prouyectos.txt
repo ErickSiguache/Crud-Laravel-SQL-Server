@@ -1,0 +1,45 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// Procesos de creacion de los proyectos en Laravel ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Para crear un proyecto se debe correr el comando:
+
+///https://laravel.com/docs/8.x/installation
+
+composer create-project laravel/laravel crudsqlserver
+php artisan serve
+
+
+* Configuracion de conexion a bases de datos en Microsoft SQL Server
+
+DB_CONNECTION=sqlsrv (Nombre del servidor)
+DB_HOST=000.000.000.000 (Ip dende corre el servidor)
+DB_PORT=1433 (Puerto de acceso configurado)
+DB_DATABASE=laravelcrud (Nombre de la base de datos)
+DB_USERNAME= fgddg (Usuario de acceso)
+DB_PASSWORD= ***** (Contraseña de acceso)
+
+
+/////////////////// Para uso de XAMPP se debe configurar para conectar con SQL Server: ///////////////////
+
+* Descargar los Drivers para PHP de SQL Server
+
+//https://docs.microsoft.com/en-us/sql/connect/php/download-drivers-php-sql-server?view=sql-server-ver15
+
+* Colocarlos los correspondientes a el PHP instalado (PHP v8.1.2 = 81) en la direccion:
+
+C:\xampp\php\ext
+
+* Configurar el archivo php.info y configurar:
+
+extension=php_pdo_sqlsrv_81_ts_x64
+extension=php_sqlsrv_81_ts_x64
+
+
+
+/////////////////// Proceso de creacion de modelos y controladores y migraciones: ///////////////////
+
+
+php artisan make:migration create_personas_table
+php artisan make:model Personas -r (Para crear directamente el controlador)
+
